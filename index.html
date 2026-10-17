@@ -3,86 +3,108 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Stratax analytics portfolio featuring data analysis, SQL, Python, business intelligence, and dashboard projects.">
+  <meta name="description" content="Stratax analytics portfolio: data analytics, business intelligence, reporting, SQL, Python and Power BI case studies.">
   <title>Stratax | Analytics Portfolio</title>
   <style>
-    :root { --ink:#17202a; --muted:#5c6670; --line:#e1e6eb; --paper:#f6f8fa; --accent:#176b61; --white:#fff; }
+    :root { color-scheme: dark; --bg:#0b1020; --panel:#121a2e; --panel2:#17223a; --text:#f3f6fc; --muted:#a7b4cc; --accent:#63e6be; --line:#293650; }
     * { box-sizing:border-box; }
-    body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.6 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
-    a { color:var(--accent); text-underline-offset:3px; }
-    .wrap { max-width:1060px; margin:0 auto; padding:28px 22px 70px; }
-    header { display:flex; justify-content:space-between; align-items:center; gap:18px; padding:10px 0 28px; }
-    .brand { font-size:1.05rem; font-weight:800; letter-spacing:.1em; }
-    .tag { color:var(--muted); font-size:.9rem; }
-    .hero { background:var(--white); border:1px solid var(--line); border-radius:22px; padding:clamp(28px,6vw,64px); }
-    .eyebrow { color:var(--accent); text-transform:uppercase; letter-spacing:.14em; font-weight:800; font-size:.77rem; }
-    h1 { max-width:760px; font-size:clamp(2.2rem,5.3vw,4rem); line-height:1.08; letter-spacing:-.045em; margin:13px 0 18px; }
-    .lead { max-width:720px; color:var(--muted); font-size:1.12rem; }
-    .chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:24px; }
-    .chips span { padding:5px 11px; border:1px solid var(--line); border-radius:99px; background:#fff; font-size:.86rem; }
-    section { margin-top:48px; }
-    h2 { font-size:1.65rem; letter-spacing:-.025em; margin:0 0 16px; }
-    .project { background:#fff; border:1px solid var(--line); border-radius:18px; overflow:hidden; }
-    .project-body { padding:24px; }
-    .project h3 { font-size:1.28rem; line-height:1.3; margin:0 0 8px; }
-    .meta { color:var(--muted); font-size:.92rem; margin-bottom:14px; }
-    .preview { display:block; width:100%; height:auto; border-top:1px solid var(--line); }
-    .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
-    .tile { border:1px solid var(--line); border-radius:14px; padding:18px; background:#fff; }
-    .tile h3 { margin:0 0 6px; font-size:1rem; }
-    .tile p { margin:0; color:var(--muted); font-size:.93rem; }
-    .notice { border-left:4px solid #8d7b37; padding:12px 16px; background:#fff; color:var(--muted); border-radius:0 10px 10px 0; font-size:.91rem; }
-    footer { border-top:1px solid var(--line); margin-top:48px; padding-top:18px; color:var(--muted); font-size:.9rem; }
-    @media (max-width:700px) { header { align-items:flex-start; flex-direction:column; } .grid { grid-template-columns:1fr; } }
+    html { scroll-behavior:smooth; }
+    body { margin:0; font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background:radial-gradient(900px 600px at 85% -10%, #1a3154 0%, transparent 65%),var(--bg); color:var(--text); line-height:1.6; }
+    a { color:var(--accent); text-decoration:none; }
+    a:hover { text-decoration:underline; }
+    .wrap { width:min(1100px,92vw); margin:0 auto; }
+    nav { display:flex; justify-content:space-between; gap:1rem; align-items:center; padding:1.5rem 0; border-bottom:1px solid var(--line); }
+    .brand { letter-spacing:.13em; font-weight:800; font-size:.95rem; }
+    .nav-links { display:flex; gap:1.1rem; flex-wrap:wrap; color:var(--muted); font-size:.92rem; }
+    .hero { padding:5.5rem 0 4rem; max-width:850px; }
+    .eyebrow { color:var(--accent); text-transform:uppercase; letter-spacing:.15em; font-size:.77rem; font-weight:800; }
+    h1 { font-size:clamp(2.4rem,7vw,5rem); letter-spacing:-.055em; line-height:1.03; margin:.8rem 0 1.25rem; }
+    .hero p { max-width:720px; font-size:1.17rem; color:var(--muted); }
+    .actions { display:flex; gap:.8rem; flex-wrap:wrap; margin-top:1.8rem; }
+    .btn { display:inline-flex; padding:.75rem 1rem; border-radius:999px; border:1px solid var(--line); font-weight:700; }
+    .btn.primary { background:var(--accent); color:#07121a; border-color:var(--accent); }
+    section { padding:2.5rem 0; }
+    h2 { font-size:clamp(1.5rem,4vw,2.15rem); letter-spacing:-.03em; margin:0 0 .5rem; }
+    .section-lead { color:var(--muted); max-width:720px; margin:0 0 1.5rem; }
+    .grid { display:grid; grid-template-columns:repeat(12,minmax(0,1fr)); gap:1rem; }
+    .card { grid-column:span 12; border:1px solid var(--line); background:linear-gradient(145deg,rgba(23,34,58,.96),rgba(18,26,46,.96)); padding:1.35rem; border-radius:1.1rem; overflow:hidden; }
+    @media(min-width:760px) { .card.half { grid-column:span 6; } }
+    .tag { display:inline-block; font-size:.77rem; color:var(--accent); border:1px solid #335b58; background:#0f2b2b; padding:.2rem .55rem; border-radius:999px; margin:.12rem .2rem .12rem 0; }
+    .card h3 { margin:.25rem 0 .4rem; font-size:1.25rem; }
+    .muted { color:var(--muted); }
+    .metric-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.7rem; margin:1.2rem 0; }
+    .metric { background:rgba(5,10,22,.42); border:1px solid var(--line); border-radius:.75rem; padding:.8rem; }
+    .metric strong { display:block; font-size:1.2rem; letter-spacing:-.02em; }
+    .metric span { color:var(--muted); font-size:.82rem; }
+    @media(min-width:650px) { .metric-grid { grid-template-columns:repeat(4,minmax(0,1fr)); } }
+    .preview { display:block; width:100%; height:auto; border-radius:.7rem; border:1px solid var(--line); margin:1rem 0; }
+    .notice { padding:1rem 1.1rem; border:1px solid #675b2f; background:#282416; color:#f4e7b2; border-radius:.8rem; font-size:.9rem; }
+    ul { padding-left:1.2rem; }
+    li { margin:.35rem 0; }
+    footer { margin-top:2rem; padding:2rem 0 3rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; }
+    code { color:#d1e4ff; overflow-wrap:anywhere; }
   </style>
 </head>
 <body>
-  <main class="wrap">
-    <header>
-      <div class="brand">STRATAX</div>
-      <div class="tag">Analytics · Business Intelligence · Reporting</div>
+  <div class="wrap">
+    <nav>
+      <div class="brand">STRATAX / ANALYTICS</div>
+      <div class="nav-links"><a href="#work">Work</a><a href="#approach">Approach</a><a href="#contact">Contact</a></div>
+    </nav>
+    <header class="hero">
+      <div class="eyebrow">Data analytics · Business intelligence</div>
+      <h1>Make data easier to understand. Make decisions easier to explain.</h1>
+      <p>Stratax is building practical analytics and reporting solutions for small businesses. This portfolio documents the datasets, methods, questions, and limitations behind each project, not just the charts.</p>
+      <div class="actions">
+        <a class="btn primary" href="project/retail-sales-dashboard/README.md">Explore first case study</a>
+        <a class="btn" href="project/retail-sales-dashboard/docs/power-bi-build-guide.md">Power BI build guide</a>
+      </div>
     </header>
-    <section class="hero" style="margin-top:0">
-      <div class="eyebrow">Analytics portfolio</div>
-      <h1>Making business data easier to understand and use.</h1>
-      <p class="lead">I build practical analytics projects that connect data preparation, SQL analysis, KPI reporting, and dashboard design. This portfolio documents the work, the decisions behind it, and the limitations honestly.</p>
-      <div class="chips"><span>Python</span><span>SQL</span><span>Power BI</span><span>Excel</span><span>Data Visualization</span></div>
-    </section>
-
-    <section>
-      <h2>Featured case study</h2>
-      <article class="project">
-        <div class="project-body">
-          <div class="eyebrow">Project 01 · Retail analytics</div>
+    <section id="work">
+      <div class="eyebrow">Selected work</div>
+      <h2>Portfolio case studies</h2>
+      <p class="section-lead">One reproducible retail analytics case study is included now. Future projects will be added after they have working analysis, clear documentation, and reviewable outputs.</p>
+      <div class="grid">
+        <article class="card">
+          <span class="tag">Case study 01</span><span class="tag">Python</span><span class="tag">SQL</span><span class="tag">Power BI design</span>
           <h3>Retail Sales Performance &amp; Profitability</h3>
-          <p class="meta">Python · pandas · SQL · Power BI build guide · DAX measures</p>
-          <p><strong>Business question:</strong> Where does revenue come from, and how does profitability vary by month, product category, city, and sales channel?</p>
-          <p>The project generates a reproducible synthetic dataset, cleans transaction-level data, calculates revenue and profit KPIs, explores channel/category performance, and includes SQL queries plus a Power BI build guide.</p>
-          <p><a href="project/retail-sales-dashboard/README.md">Read the case study</a> · <a href="project/retail-sales-dashboard/docs/power-bi-build-guide.md">Open the Power BI build guide</a></p>
-        </div>
-        <img class="preview" src="project/retail-sales-dashboard/outputs/charts/dashboard_preview_python_not_powerbi.png" alt="Python-generated analytical preview with monthly trend, category revenue, channel revenue, and discount-versus-margin chart">
-      </article>
-      <p class="notice"><strong>Data integrity:</strong> This case study uses synthetic data. The image above is a Python-generated analytical preview, not a screenshot of a completed Power BI report. It is not client work and makes no claim about a real business.</p>
-    </section>
-
-    <section>
-      <h2>How I work</h2>
-      <div class="grid">
-        <article class="tile"><h3>Prepare</h3><p>Check data quality, standardize fields, and make the analysis reproducible.</p></article>
-        <article class="tile"><h3>Analyze</h3><p>Use SQL and Python to investigate performance, trends, and business questions.</p></article>
-        <article class="tile"><h3>Communicate</h3><p>Turn results into clear metrics, reporting views, and practical next questions.</p></article>
+          <p class="muted">A fictional multi-channel retailer needs to understand where revenue comes from and whether that revenue is profitable. The workflow cleans transaction-line data, calculates KPIs, compares categories and channels, and provides a Power BI implementation guide with DAX measures.</p>
+          <div class="metric-grid">
+            <div class="metric"><strong>4,200</strong><span>Fictional orders</span></div>
+            <div class="metric"><strong>9,319</strong><span>Order lines</span></div>
+            <div class="metric"><strong>PKR 70.1M</strong><span>Illustrative net revenue</span></div>
+            <div class="metric"><strong>34.1%</strong><span>Illustrative margin</span></div>
+          </div>
+          <img class="preview" src="project/retail-sales-dashboard/outputs/charts/dashboard_preview_python_not_powerbi.png" alt="Python-generated retail sales analysis preview with monthly trend, category revenue, channel revenue, and discount versus margin charts">
+          <div class="notice"><strong>Data and status disclosure:</strong> all transactions and figures are synthetic. The image above is a Python-generated preview, not a Power BI screenshot. The repository includes DAX and a build guide, but a native .pbix report must still be created separately in Power BI Desktop.</div>
+          <div class="actions">
+            <a class="btn primary" href="project/retail-sales-dashboard/README.md">Read case study</a>
+            <a class="btn" href="project/retail-sales-dashboard/sql/analysis_queries.sql">Review SQL</a>
+            <a class="btn" href="project/retail-sales-dashboard/outputs/illustrative_findings.md">View findings</a>
+          </div>
+        </article>
+        <article class="card half" id="approach">
+          <div class="eyebrow">How I work</div>
+          <h3>Start with the business question</h3>
+          <p class="muted">Define the decision first, verify the data, select measures that answer the question, then explain what the analysis can and cannot support.</p>
+          <ul><li>Data cleaning and exploratory analysis</li><li>SQL for reusable business questions</li><li>Python and pandas for repeatable transformations</li><li>KPIs, dashboards, and reporting design</li><li>Clear documentation and quality checks</li></ul>
+        </article>
+        <article class="card half">
+          <div class="eyebrow">Current toolkit</div>
+          <h3>Tools and methods</h3>
+          <p><span class="tag">SQL</span><span class="tag">Python</span><span class="tag">pandas</span><span class="tag">Power BI</span><span class="tag">DAX</span><span class="tag">Excel</span><span class="tag">Data visualization</span><span class="tag">KPI design</span></p>
+          <p class="muted">This is a developing portfolio. Project pages distinguish implemented analysis from planned or not-yet-built deliverables.</p>
+        </article>
       </div>
     </section>
-
-    <section>
-      <h2>Next projects</h2>
-      <div class="grid">
-        <article class="tile"><h3>Customer retention &amp; cohorts</h3><p>Planned: repeat purchases, retention cohorts, and customer value analysis.</p></article>
-        <article class="tile"><h3>Marketing performance</h3><p>Planned: channel efficiency, conversions, and acquisition cost analysis.</p></article>
-        <article class="tile"><h3>Small-business reporting</h3><p>Planned: a reusable KPI reporting template for a small-business use case.</p></article>
-      </div>
+    <section id="contact">
+      <div class="eyebrow">Contact</div>
+      <h2>Work in progress, openly documented.</h2>
+      <p class="section-lead">For collaboration and analytics discussions, connect through LinkedIn or update this section with a professional contact email before publishing.</p>
+      <p><strong>Thomas B. · Founder, Stratax</strong><br><span class="muted">Applied Psychology &amp; Data Analytics student · Lahore, Pakistan</span></p>
+      <p class="muted">Before publishing this page, add your LinkedIn profile URL to this section and verify each portfolio artifact is ready to be public.</p>
     </section>
-    <footer>Stratax · Portfolio in progress. Project status and data sources are disclosed within each case study.</footer>
-  </main>
+    <footer>© Stratax · Portfolio examples use synthetic data unless a project explicitly states otherwise.</footer>
+  </div>
 </body>
 </html>
