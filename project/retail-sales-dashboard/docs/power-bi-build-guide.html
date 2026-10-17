@@ -1,0 +1,35 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Power BI Build Guide | Stratax</title><style>:root{color-scheme:dark;--bg:#0b1020;--panel:#121a2e;--text:#f3f6fc;--muted:#a7b4cc;--accent:#63e6be;--line:#293650}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,sans-serif;line-height:1.65}.wrap{width:min(950px,92vw);margin:auto}header{padding:2rem 0;border-bottom:1px solid var(--line)}a{color:var(--accent)}h1{font-size:clamp(2rem,5vw,3rem);line-height:1.1;letter-spacing:-.04em}h2{margin-top:2.2rem}.muted,li{color:var(--muted)}.note{margin:1.2rem 0;padding:1rem;border:1px solid #675b2f;background:#282416;color:#f4e7b2;border-radius:.75rem}pre{overflow-x:auto;background:#111a2d;padding:1rem;border:1px solid var(--line);border-radius:.75rem;color:#d9e6ff}table{width:100%;border-collapse:collapse;background:var(--panel)}th,td{text-align:left;padding:.7rem;border-bottom:1px solid var(--line);vertical-align:top}footer{margin-top:3rem;padding:2rem 0;border-top:1px solid var(--line);color:var(--muted)}</style></head><body><div class="wrap"><header><p><a href="../index.html">← Retail analytics case study</a></p><p style="color:var(--accent);letter-spacing:.12em;text-transform:uppercase;font-size:.8rem;font-weight:800">STRATAX / IMPLEMENTATION GUIDE</p><h1>Build the Retail Sales Power BI report</h1><p class="muted">Create the native .pbix report from the included cleaned CSV and use these calculations and checks to make the dashboard defensible.</p></header><main>
+<div class="note"><strong>Important:</strong> this is a build guide, not a completed Power BI file. The Python charts in this portfolio are previews. Only describe this as a completed Power BI dashboard after you build, check, and save the .pbix report in Power BI Desktop.</div>
+<h2>1. Load and check data</h2><ol><li>Open Power BI Desktop → <strong>Get data → Text/CSV</strong>.</li><li>Load <code>project/retail-sales-dashboard/data/processed/retail_sales_clean.csv</code>.</li><li>Rename the imported table <code>Sales</code>.</li><li>Confirm <code>order_date</code> is Date, <code>quantity</code> is Whole number, <code>discount_pct</code> is Decimal number, and amount columns are numeric.</li><li>Check for blank order IDs, negative quantities, and discount values outside 0–1.</li></ol>
+<h2>2. Add a date table</h2><pre><code>Date =
+ADDCOLUMNS (
+    CALENDAR ( MIN ( Sales[order_date] ), MAX ( Sales[order_date] ) ),
+    "Year", YEAR ( [Date] ),
+    "Month Number", MONTH ( [Date] ),
+    "Month", FORMAT ( [Date], "MMM" ),
+    "Year-Month", FORMAT ( [Date], "YYYY-MM" )
+)</code></pre><p>Create a one-to-many relationship from <code>Date[Date]</code> to <code>Sales[order_date]</code>. Sort <code>Date[Month]</code> by <code>Date[Month Number]</code> and mark the date table if available in your Power BI version.</p>
+<h2>3. Create DAX measures</h2><pre><code>Gross Sales (PKR) = SUM ( Sales[gross_revenue_pkr] )
+
+Discount Amount (PKR) = SUM ( Sales[discount_amount_pkr] )
+
+Net Revenue (PKR) = SUM ( Sales[net_revenue_pkr] )
+
+Total Cost (PKR) = SUM ( Sales[cost_pkr] )
+
+Total Profit (PKR) = SUM ( Sales[profit_pkr] )
+
+Profit Margin % = DIVIDE ( [Total Profit (PKR)], [Net Revenue (PKR)] )
+
+Total Orders = DISTINCTCOUNT ( Sales[order_id] )
+
+Unique Customers = DISTINCTCOUNT ( Sales[customer_id] )
+
+Units Sold = SUM ( Sales[quantity] )
+
+Average Order Value (PKR) = DIVIDE ( [Net Revenue (PKR)], [Total Orders] )
+
+Discount Rate % = DIVIDE ( [Discount Amount (PKR)], [Gross Sales (PKR)] )</code></pre><p>Format amount measures as currency/whole PKR with thousands separators. Format the margin and discount rate measures as percentages. Do not average row-level margins to produce an aggregate margin.</p>
+<h2>4. One-page executive layout</h2><table><thead><tr><th>Area</th><th>Visual</th><th>Fields</th></tr></thead><tbody><tr><td>Top row</td><td>Five KPI cards</td><td>Net Revenue, Total Profit, Profit Margin %, Total Orders, Average Order Value</td></tr><tr><td>Middle left</td><td>Line chart</td><td>Date[Year-Month], Net Revenue, Total Profit</td></tr><tr><td>Middle right</td><td>Horizontal bar chart</td><td>Category by Net Revenue; add Profit to tooltip</td></tr><tr><td>Bottom left</td><td>Channel chart</td><td>Sales Channel by Net Revenue; Profit Margin % in tooltip</td></tr><tr><td>Bottom right</td><td>City chart or matrix</td><td>City, Net Revenue, Total Orders, Profit Margin %</td></tr><tr><td>Slicers</td><td>Filter controls</td><td>Date, City, Sales Channel, Category, Customer Segment</td></tr></tbody></table>
+<h2>5. Validate before exporting</h2><ul><li>Does total net revenue reconcile to <a href="../outputs/kpi_summary.csv">the included KPI summary</a>?</li><li>Use distinct order count, not row count, for orders.</li><li>Check Total Profit = Net Revenue − Total Cost.</li><li>Check Profit Margin = total profit ÷ total net revenue.</li><li>Confirm monthly labels sort chronologically and slicers filter all relevant visuals.</li><li>Add a note to the page that this is a synthetic-data portfolio case study.</li></ul><h2>6. Save and publish artifacts</h2><p>Save the report as <code>retail-sales-performance.pbix</code>. Export a clean page screenshot or PDF to show in the GitHub README and LinkedIn Project media. Keep the native Power BI file and screenshot in the repository. Do not label the Python-generated preview as a Power BI screenshot.</p>
+</main><footer>Stratax · Synthetic data only · <a href="../index.html">Back to case study</a></footer></div></body></html>

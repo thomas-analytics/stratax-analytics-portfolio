@@ -58,6 +58,8 @@ python project/retail-sales-dashboard/src/analyze_sales.py
 
 The scripts regenerate the synthetic raw data, cleaned dataset, KPI tables, findings, and Python charts.
 
+Run quality checks with `pip install -r requirements-dev.txt` followed by `python -m pytest project/retail-sales-dashboard/tests -q`.
+
 ## Preview
 
 ### Monthly revenue and profit
