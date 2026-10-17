@@ -1,0 +1,2 @@
+line_items,orders,customers,units_sold,gross_revenue_pkr,discount_amount_pkr,net_revenue_pkr,cost_pkr,profit_pkr,profit_margin_pct,average_order_value_pkr,discount_rate_pct
+9319,4200,1398,16693,76289500,6198497.14,70091002.87,46177950,23913052.86,0.3412,16688.33,0.0812
